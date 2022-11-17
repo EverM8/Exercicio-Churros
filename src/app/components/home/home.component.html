@@ -1,0 +1,66 @@
+<app-header></app-header>
+
+<main>
+
+  <mat-card class="mat-card">
+
+    <mat-card-title>Pontos de venda cadastrado</mat-card-title>
+    <ul *ngIf="pontoDeVenda.length !== 0; else listaVazia">
+      <li *ngFor="let cadastrado of pontoDeVenda ">
+        {{cadastrado.nome}} - {{cadastrado.pontoVenda}} - {{cadastrado.cidade}} - {{cadastrado.estado}} ({{cadastrado.comecaAs}} às {{cadastrado.terminaAs}})
+      </li>
+    </ul>
+
+    
+
+    <ng-template #listaVazia>
+      <p>Não há nenhum ponto cadastrado.</p>
+  </ng-template>
+
+  </mat-card><br><br>
+
+  
+<mat-card>
+  <form class="formChurros" [formGroup]="cadastrarPonto" >
+    <mat-card-title>Cadastre um novo ponto de venda</mat-card-title>
+    <mat-form-field class="max-width" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input type="text" matInput #input formControlName="nome" >
+    </mat-form-field><br>
+
+    <div class="estado-cidade">
+    <mat-form-field class="max-width" appearance="fill">
+      <mat-label>Estado</mat-label><br>
+      <mat-select formControlName="estado">
+        <mat-option [value]=estado.nome (onSelectionChange)="listarCidades(estado.sigla)" *ngFor="let estado of estado">{{estado.nome }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field  class="max-width" appearance="fill">
+      <mat-label>Cidade</mat-label><br>
+      <mat-select formControlName="cidade">
+        <mat-option [value]="cidade.nome" *ngFor="let cidade of listaMunicipios">{{cidade.nome}}</mat-option>
+      </mat-select>
+    </mat-form-field><br>
+    </div>
+
+    <mat-form-field  class="max-width" appearance="fill">
+    <mat-label>Ponto de venda</mat-label>
+    <input type="text" matInput #input formControlName="pontoVenda" >
+    </mat-form-field><br>
+
+    <mat-form-field  class="max-width" appearance="fill">
+      <mat-label>Começa às</mat-label>
+      <input type="time" matInput #input formControlName="comecaAs" >
+      </mat-form-field>
+
+    <mat-form-field  class="max-width" appearance="fill">
+      <mat-label>Termina às</mat-label>
+      <input type="time" matInput #input formControlName="terminaAs" >
+      </mat-form-field><br>
+
+      <button mat-stroked-button color="warn" (click)="salva()">Cadastrar</button>
+
+    </form>
+  </mat-card>
+</main>
